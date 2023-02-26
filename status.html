@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tytus minimal api server</title>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 50px;
+    }
+
+    .test-box {
+      display: flex;
+      flex-direction: column;
+      max-width: 500px;
+    }
+
+    .header {
+      color: white;
+      background-color: rgb(45, 85, 214);
+      width: 100%;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+    }
+
+    .test-space {
+      height: 100px;
+      padding-top: 10px;
+      background-color: darkgray;
+      width: 100%;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      display: flex;
+    }
+
+    h1 {
+      margin-left: 30px;
+    }
+
+    article {
+      color: rgb(75, 75, 75);
+      margin-left: 30px;
+      width: 300px;
+    }
+
+    button {
+      color: rgb(45, 85, 214);
+      background-color: white;
+      padding: 0.5em;
+      margin: 20px 20px;
+      height: 40px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      color: rgb(45, 85, 214);
+      background-color: rgba(255, 255, 255, 0.869);
+    }
+
+    button:active {
+      color: white;
+      background-color: rgb(45, 85, 214);
+    }
+  </style>
+  <script>
+    function test() {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", '/api/maja/test', true);
+
+      // Let the server know that we will use JSON body
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      // handle result when it becomes available
+      xhr.onreadystatechange = function () {
+        // for this simple code we don't care for other state changes than DONE
+        if (this.readyState !== XMLHttpRequest.DONE) return
+
+        switch (this.status) {
+          case 200: {
+            const responseContent = JSON.parse(this.responseText);
+            alert(`Success!\n${responseContent.message}!`);
+            break
+          }
+          default: alert(`Error: ${this.status}`)
+        }
+      }
+
+      const requestParams = {
+        name: "Maja"
+      }
+
+      xhr.send(JSON.stringify(requestParams));
+    }
+  </script>
+</head>
+
+<body>
+  <div class="test-box">
+    <div class="header">
+      <h1>Mini-server-maja</h1>
+    </div>
+    <div class="test-space">
+      <article>
+        <p>Welcome on server status site.</p>
+        <p>Here you can tray if server response.</p>
+      </article>
+      <button onclick="test()">Say hello to Maja</button>
+    </div>
+  </div>
+</body>
+
+</html>
